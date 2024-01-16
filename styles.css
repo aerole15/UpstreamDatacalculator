@@ -1,0 +1,80 @@
+
+body {
+  font-family: 'Arial', sans-serif;
+  background-color: rgb(0, 8, 8);
+}
+
+.minimize-btn {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  cursor: pointer;
+  background: none;
+  border: none;
+  font-size: 20px;
+}
+
+.calculation-title.minimized {
+  display: none;
+}
+
+.info-circle:hover {
+  cursor: pointer;
+  color: #007bff;
+  text-decoration: underline;
+}
+.card-capital-expenses,
+.card-asic,
+.card-indirect-revenue,
+.card-operating-expenses-cash,
+.card-operating-expenses-noncash,
+.card-salvage-value-package {
+    border-bottom: none;
+}
+
+.title-input h5 {
+  font-size: 1.0rem; 
+  margin-bottom: 5px;
+}
+
+.asic-input {
+  text-align: center;
+}
+
+
+.card:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.thead-id,
+.card-title {
+  color: #48a2dd; 
+}
+
+.loading-placeholder {
+  position: relative;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.loading-spinner {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 4px solid #3498db; /* Blue color, you can change it to your preferred color */
+  border-bottom-color: transparent;
+  animation: rotateMushroom 1.5s linear infinite;
+}
+
+@keyframes rotateMushroom {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.error-border {
+  border: 1px solid red;
+}
+
+

@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+        <link rel="stylesheet" href="styles.css">
+        
+        <title>Bitcoin Calculator</title>
+    </head>
+
+<body class="bg-white"> 
+    <div class="pdf-download-1">
+        <div class="container mt-4">
+            <h1 class="text-primary text-center mb-4">
+                How Profitable is Bitcoin?
+            </h1>
+            <div class="row row-cols-1 row-cols-md-2 row-cols-xl-4 mb-4 g-4">
+                <div class="col">
+                    <div class="card border border-primary shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row g-0 align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-uppercase fw-bold fw-bold text-primary mb-1">
+                            <h6 class="card-title text-center">Bitcoin Price (USD)</h6>
+                            </div>
+                            <div class="loading-placeholder" id="btc-price-placeholder">
+                                <div class="loading-spinner">
+                                
+                                </div>
+                            </div>
+                            <div id="btc-price" class="h5 mb-0 font-weight-bold w-100 text-center">
+                            </div>
+                        </div>
+                        </div>
+                        <div class="position-absolute top-0 end-0 p-1">
+                        <span class="info-circle" data-bs-toggle="tooltip" data-bs-placement="top"
+                            title="Based on 14/days average"><i class="fas fa-info-circle"></i></span>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+                
+                <div class="col">
+                    <div class="card border border-primary shadow h-100 py-2">
+                        <div class="card-body">
+                            <div class="row g-0 align-items-center">
+                                <div class="col mr-2">
+                                    <div class="text-uppercase fw-bold text-primary mb-1">
+                                        <h6 class="card-title text-center">Total Network Hashrate</h6>
+                                    </div>
+                                    <div class="loading-placeholder" id="btc-hashrate-placeholder">
+                                        <div class="loading-spinner">
+                                        
+                                        </div>
+                                    </div>
+                                    <div id="btc-hashrate" class="h5 mb-0 font-weight-bold w-100 text-center">
+
+                                    </div>
+                                    <div class="position-absolute top-0 end-0 p-1">
+                                        <span class="info-circle" data-bs-toggle="tooltip" data-bs-placement="top"
+                                        title="Based on 14/days average"> <i class="fas fa-info-circle"></i> </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card border border-primary shadow h-100 py-2">
+                        <div class="card-body">
+                            <div class="row g-0 align-items-center">
+                                <div class="col mr-2">
+                                    <div class="text-uppercase fw-bold text-primary mb-1">
+                                        <h6 class="card-title text-center">Daily Mined Bitcoins</h6>
+                                    </div>
+                                    <div class="loading-placeholder" id="btc-mined-placeholder">
+                                        <div class="loading-spinner">
+                                        
+                                        </div>
+                                    </div>
+                                    <div id="daily-mined-bitcoins" class="h5 mb-0 font-weight-bold w-100 text-center">
+                                    
+                                    </div>
+                                    <div class="position-absolute top-0 end-0 p-1">
+                                        <span class="info-circle" data-bs-toggle="tooltip" data-bs-placement="top"
+                                        title="Based on 14/days average"> <i class="fas fa-info-circle"></i> </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card border border-primary shadow h-100 py-2">
+                        <div class="card-body">
+                            <div class="row g-0 align-items-center">
+                                <div class="col mr-2">
+                                    <div class="text-uppercase fw-bold text-primary mb-1">
+                                        <h6 class="card-title text-center">Gross Network Revenue(USD)</h6>
+                                    </div>
+                                    <div class="loading-placeholder" id="btc-revenue-placeholder">
+                                        <div class="loading-spinner">
+                                        
+                                        </div>
+                                    </div>
+                                    <div id="gross-network-revenue" class="h5 mb-0 font-weight-bold w-100 text-center">
+                                    </div>
+                                    <div class="position-absolute top-0 end-0 p-1">
+                                        <span class="info-circle" data-bs-toggle="tooltip" data-bs-placement="top"
+                                        title="Based on 14/days average"><i class="fas fa-info-circle"></i> </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-6">
+                    <div id="pdf-download">
+                        <div class="card col-md-12 asic-miner mt-4">
+                        <button class="minimize-btn" type="button" data-bs-toggle="collapse" data-bs-target="#asic-package-collapse" aria-expanded="false" aria-controls="asic-package-collapse">
+                                <span class="icon">-</span>
+                            </button>         
+                            <h3 class="card-title text-center mt-2">
+                                Asic Miner
+                            <h3>
+                            <div class="card-header card-asic">
+                                <div class="collapse show" id="asic-package-collapse">
+                                    <div class="card-body d-flex">
+                                        <div id="packageMenu"class="col-md-6">
+                                            <select id="packageSelect" class="text-center form-select" aria-label="Default select example" onchange="updateHashGenerator()">
+                                                <option selected>Select your Package</option>
+                                                <option value="1" package-quantity="24">90 KW Hash Generator</option>
+                                                <option value="2" package-quantity="48">180 KW Hash Generator</option>
+                                                <option value="3" package-quantity="96">360 KW Hash Generator</option>
+                                                <option value="4" package-quantity="192">720 KW Hash Generator</option>
+                                                <option value="5" package-quantity="240">900 KW Hash Generator</option>
+                                            </select>
+                                        </div>
+                                        <div id="asicMenu "class="col-md-6" style="margin-left: 10px;"> 
+                                            <select id="asicSelect" class="text-center form-select" aria-label="Default select example" onchange="updateAsicModel()">
+                                                <option selected>Select your Asic Model</option>
+                                                <option value="1" asic-hashrate = "14">Antminer S9</option>
+                                                <option value="2" asic-hashrate = "110">Antminer S19 Pro</option>
+                                                <option value="3" asic-hashrate = "100">Whatsminer M30S+</option>
+                                                <option value="4" asic-hashrate = "105">Whatsminer M30S++</option>
+                                                <option value="5" asic-hashrate = "112">Whatsminer M50</option>
+                                                <option value="6" asic-hashrate = "128">Whatsminer M50S</option>
+                                                <option value="7" asic-hashrate = "138">Whatsminer M50S+</option>
+                                                <option value="8" asic-hashrate = "140">Whatsminer M50S++</option>
+                                                <option value="9" asic-hashrate = "170">Whatsminer M60</option>
+                                                <option value="10" asic-hashrate = "185">Whatsminer M60S</option>
+                                                
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="title-input mt-4">
+                                        <div class="row row-cols-1 row-cols-md-2 row-cols-xl-3 mb-4 g-4 align-items-center">
+                                            <div class="asic-input">
+                                                <h5>Asic Hashrate
+                                                    <span class="info-circle" data-bs-toggle="tooltip" data-bs-placement="top"
+                                                    title="This is the Hashrate per ASIC machine"><i class="fas fa-info-circle"></i></span>
+                                                </h5>
+                                                <input id="asicHashrate"type="text" class="form-control" placeholder="Enter Asic Hashrate" oninput="calculate()">
+                                            </div>
+                                            <div class="asic-input">
+                                                <h5>Asic Power Consumption(KW)
+                                                </h5>
+                                                <input id="asicPowerInput" type="text" class="form-control" placeholder="Enter Power Consumption" oninput="calculate()">
+                                            </div>
+                                            <div class="asic-input">
+                                                <h5>Quantity ASICs/Package
+                                                </h5>
+                                                <input id="quantityInput" type="text" class="form-control" placeholder="Enter Quantity" oninput="calculate()">
+                                            </div>
+                                            <div class="asic-input">
+                                                <h5>
+                                                    Asic Cost(USD)
+                                                </h5>
+                                                <div class="input-group">
+                                                    <span class="input-group-text">$</span>
+                                                    <input id="asic-Cost"type="text" class="form-control" placeholder="Enter Cost">
+                                                </div>
+                                            </div>
+                                            <div class="asic-input">
+                                                <h5>Asic Daily Revenue(USD/day)
+                                                </h5>
+                                                <div class="input-group">
+                                                    <span class="input-group-text">$</span>
+                                                    <input id="totalAsicRevenue" type="text" class="form-control" readonly>
+                                                </div>
+                                            </div>
+                                            <div class="asic-input">
+                                                <h5>Reference Hashprice(USD/day)
+                                                </h5>
+                                                <div class="input-group">
+                                                    <span class="input-group-text" >$</span>
+                                                    <input  id="reference-hashprice" type="text"  class="form-control" readonly> 
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row row-cols-1 row-cols-xl-2 mb-4 g-4 align-items-center">
+                                            <div class="total-input text-center">
+                                                <h5>Total Loadcenter KW
+                                                </h5>
+                                                <input id="totalCost" type="text" class="form-control" placeholder="Total KW" readonly  >
+                                            </div>
+                                            <div class="total-input text-center">
+                                                <h5>Estimated Fuel Gas(MCF/day)
+                                                </h5>
+                                                <input id="totalRevenue" type="text" class="form-control" placeholder="Total MCF" readonly>
+                                            </div>
+                                        </div>
+                                        <div class="col col-md-6 mx-auto">
+                                            <div class="row row-cols-1 mb-4 g-4 align-items-center">
+                                                <div class="total-input text-center">
+                                                    <h5>Daily Gross Revenue
+                                                        <span class="info-circle" data-bs-toggle="tooltip" data-bs-placement="top"
+                                                        title="This is like the oil price. Multiply Hashprice by the nominal hashrate of your ASIC model to get the current daily revenue / TH/s of the model"><i class="fas fa-info-circle"></i></span>
+                                                    </h5>
+
+                                                    <div class="input-group">
+                                                        <span class="input-group-text">$</span>
+                                                        <input id="miner-hashrate" type="text" class="form-control" placeholder="Total Daily Gross Revenue" readonly>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                    
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card col-md-12 asic-miner mt-4">
+                            <button class="minimize-btn" type="button" data-bs-toggle="collapse" data-bs-target="#indirect-revenue-collapse" aria-expanded="false" aria-controls="indirect-revenue-collapse">
+                                <span class="icon">+</span>
+                            </button>    
+                            <h3 class="card-title text-center mt-2">
+                                Indriect/Alternative Revenue
+                            <h3>
+                            <div class="card-header card-indirect-revenue">
+                                <div class="collapse show" id="indirect-revenue-collapse">
+                                    <div class="title-input mt-4">
+                                        <div class="row row-cols-1 row-cols-md-2 row-cols-xl-2 mb-4 g-4 align-items-center">
+                                            <div class="asic-input">
+                                                <h5>Incremental Oil Production(bbls/day)</h5>
+                                                <input id="incremental-oil" type="text" class="form-control" placeholder="Enter Amount">
+                                            </div>
+                                            <div class="asic-input">
+                                                <h5>Incremental Oil Production Netback($USD/bbl)</h5>
+                                                <div class="input-group">
+                                                    <span class="input-group-text">$</span>
+                                                    <input id="incremental-oil-netback"type="text" class="form-control" placeholder="Enter Amount">
+                                                </div>
+                                            </div>
+                                            <div class="asic-input">
+                                                <h5>Carbon/Emission Benefit($/Month)</h5>
+                                                <div class="input-group">
+                                                    <span class="input-group-text">$</span>
+                                                    <input id="carbon-emession-benefit" type="text" class="form-control" placeholder="Enter Amount">
+                                                    
+                                                </div>
+                                            </div>
+                                            <div class="asic-input">
+                                                <h5>Other Income:$/day(please specify)</h5>
+                                                <div class="input-group">
+                                                    <span class="input-group-text">$</span>
+                                                    <input id="other-income"type="text" class="form-control" placeholder="Enter Amount">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col col-md-6 mx-auto">
+                                            <div class="row row-cols-1 mb-4 g-4 align-items-center">
+                                                <div class="total-input text-center">
+                                                    <h5>Uptime/Revenue Discount</h5>
+                                                    <div class="input-group">
+                                                        <input id="uptime-revenue" type="text" class="form-control" placeholder="Total Uptime">
+                                                        <span class="input-group-text">%</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card col-md-12 asic-miner mt-4">
+                            <button class="minimize-btn" type="button" data-bs-toggle="collapse" data-bs-target="#capital-expenses-collapse" aria-expanded="false" aria-controls="capital-expenses-collapse">
+                                <span class="icon">+</span>
+                            </button>    
+                            <h3 class="card-title text-center mt-2">
+                                Capital Expenses
+                            <h3>
+                            <div class="card-header card-capital-expenses">
+                                <div class="collapse show" id="capital-expenses-collapse">
+                                    <div class="title-input mt-4">
+                                        <div class="col-md-9 mx-auto">
+                                            <div class="row row-cols-1 g-4 align-items-center">
+                                                <div class="total-input text-center">
+                                                    <h5>Total Equipment Packages</h5>
+                                                    <input id="total-equipment" type="text" class="form-control" placeholder="Total Equipment" oninput="calculate()">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6 mb-4 g-4 align-items-center">
+                                                <div class="col">
+                                                    <h4 class="text-center">Unit Cost</h4>
+                                                    <div class="col mb-3 asic-input">
+                                                        <h5>Genset</h5>
+                                                    
+                                                        <div class="input-group">
+                                                            <span class="input-group-text">$</span>
+                                                            <input id="genset-unit" type="text" class="form-control" placeholder="Enter Amount" oninput="calculate()">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col mb-3 asic-input">
+                                                        <h5>Loadcenter</h5>
+                                                        <div class="input-group">
+                                                            <span class="input-group-text">$</span>
+                                                            <input id="loadcenter-unit"type="text" class="form-control" placeholder="Enter Amount" oninput="calculate()">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col mb-3 asic-input">
+                                                        <h5>ASIC(USD)</h5>
+                                                        <div class="input-group">
+                                                            <span class="input-group-text">$</span>
+                                                            <input id="asic-unit" type="text" class="form-control" placeholder="Enter Amount" oninput="calculate()">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col mb-3 asic-input">
+                                                        <h5>Installation cost/package</h5>
+                                                        <div class="input-group">
+                                                            <span class="input-group-text">$</span>
+                                                            <input id="installation-unit"type="text" class="form-control" placeholder="Enter Amount" oninput="calculate()">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col mb-3 asic-input">
+                                                        <h5>Flare/Combustor</h5>
+                                                        <div class="input-group">
+                                                            <span class="input-group-text">$</span>
+                                                            <input id="flare-combustor-unit"type="text" class="form-control" placeholder="Not available" oninput="calculate()">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 mb-4 g-4 align-items-center">
+                                                <div class="col">
+                                                    <h4 class="text-center">Total Cost</h4>
+                                                    <div class="col mb-3 asic-input">
+                                                        <h5>Genset</h5>
+                                                        <div class="input-group">
+                                                            <span class="input-group-text">$</span>
+                                                            <input id="genset-total" type="text" class="form-control" readonly>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col mb-3 asic-input">
+                                                        <h5>Loadcenter</h5>
+                                                        <div class="input-group">
+                                                            <span class="input-group-text">$</span>
+                                                            <input id="loadcenter-total"type="text" class="form-control" readonly>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col mb-3 asic-input">
+                                                        <h5>ASIC(USD)</h5>
+                                                        <div class="input-group">
+                                                            <span class="input-group-text">$</span>
+                                                            <input id="asic-total" type="text" class="form-control" readonly>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col mb-3 asic-input">
+                                                        <h5>Installation cost/package</h5>
+                                                        <div class="input-group">
+                                                            <span class="input-group-text">$</span>
+                                                            <input id="installation-total" type="text" class="form-control" >
+                                                        </div>
+                                                    </div>
+                                                    <div class="col mb-3 asic-input">
+                                                        <h5>Flare Combustor</h5>
+                                                        <div class="input-group">
+                                                            <span class="input-group-text">$</span>
+                                                            <input id="flare-combustor-total" type="text" class="form-control" readonly >
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                </div>
+                                            </div>
+                                            <div class="col text-center mb-4">
+                                                <h4>Total Cost:</h4>
+                                                <div id="total-cost-equipment"></div>
+                                            </div>
+                                        
+                                    </div>
+                                </div> 
+                            </div>
+                        </div>
+                        <div class="card col-md-12 asic-miner mt-4">
+                            <button class="minimize-btn" type="button" data-bs-toggle="collapse" data-bs-target="#expenses-cash-collapse" aria-expanded="false" aria-controls="expenses-cash-collapse">
+                                <span class="icon">+</span>
+                            </button>    
+                            <h3 class="card-title text-center mt-2">
+                                Operating Expenses: Cash
+                            <h3>
+                            <div class="card-header card-operating-expenses-cash">
+                                <div class="collapse show" id="expenses-cash-collapse">
+                                    <div class="title-input mt-4 text-center"> 
+                                        <div class="row row-cols-1 row-cols-md-2 row-cols-xl-2 mb-4 g-4 align-items-center">
+                                            <div class="col mb-3 asic-input">
+                                                <h5>Genset Maintenance(Monthly)</h5>
+                                                <div class="input-group">
+                                                    <span class="input-group-text">$</span>
+                                                    <input id="genset-unit-month" type="text" class="form-control" placeholder="Enter Amount">
+                                                </div>
+                                            </div>
+                                            <div class="col mb-3 asic-input">
+                                                <h5>Cellular Data + Monitoring(Monthly)</h5>
+                                                <div class="input-group">
+                                                    <span class="input-group-text">$</span>
+                                                    <input id="cellular-data" type="text" class="form-control" placeholder="Enter Amount">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col col-md-6 mb-3 asic-input mx-auto"> 
+                                            <h5>Natural Gas Fuel Cost(Monthly)</h5>
+                                            <div class="input-group">
+                                                <span class="input-group-text">$</span>
+                                                <input id="natural-gas-cost" type="text" class="form-control" placeholder="Enter Amount">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card col-md-12 asic-miner mt-4">
+                            <button class="minimize-btn" type="button" data-bs-toggle="collapse" data-bs-target="#expenses-noncash-collapse" aria-expanded="false" aria-controls="expenses-noncash-collapse">
+                                <span class="icon">+</span>
+                            </button> 
+                            <h3 class="card-title text-center mt-2">
+                                Operating Expenses: Non-Cash
+                            <h3>
+                            <div class="card-header card-operating-expenses-noncash">
+                                <div class="collapse show" id="expenses-noncash-collapse">
+                                    <div class="title-input mt-4 text-center"> 
+                                        <div class="row row-cols-1 row-cols-md-2 row-cols-xl-2 mb-4 g-4 align-items-center">
+                                            <div class="col mb-3 asic-input">
+                                                <h5>Asic replacement rate(Months)</h5>
+                                                <input id="asic-replacement" type="text" class="form-control" placeholder="Enter Amount">
+                                            </div>
+                                            <div class="col mb-3 asic-input">
+                                                <h5>Genset replacement rate(Months)</h5>
+                                                <input id="genset-replacement" type="text" class="form-control" placeholder="Enter Amount">
+                                            </div>
+                                        </div>
+                                        <div class="col col-md-6 mb-3 asic-input mx-auto"> 
+                                            <h5>Loadcenter replacement rate(Months)</h5>
+                                            <input id="loadcenter-replacement" type="text" class="form-control" placeholder="Enter Amount">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card col-md-12 asic-miner mt-4">
+                            <button class="minimize-btn" type="button" data-bs-toggle="collapse" data-bs-target="#salvage-value-collapse" aria-expanded="false" aria-controls="salvage-value-collapse">
+                                <span class="icon">+</span>
+                            </button> 
+                            <h3 class="card-title text-center mt-2">
+                                Salvage Value of Package
+                            <h3>
+                            <div class="card-header card-salvage-value-package">
+                                <div class="collapse show" id="salvage-value-collapse">
+                                    <div class="title-input mt-4 text-center"> 
+                                        <div class="col col-md-6 mb-3 asic-input mx-auto"> 
+                                            <div class="input-group">
+                                                <input id="salvage-value-package" type="text" class="form-control" placeholder="NPV as % of capex">
+                                                <span class="input-group-text">%</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="calculate text-center">
+                        <button type="button" class="btn btn-primary btn-lg mt-4">Calculate</button>
+                    </div>
+                </div>
+                
+                <div class="col-md-6 mt-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="card-logo text-center mb-4 g-2">
+                                <img src="upstreamlogo.svg" alt="Upstream Logo">
+                            </div>
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th class="text-primary"><h4 class="thead-id">Revenue</h4></th>
+                                        <th class="text-primary"><h4 class="thead-id">Monthly</h4></th>
+                                        <th class="text-primary"><h4 class="thead-id">Annual</h4></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- Bitcoin Revenue -->
+                                    <tr>
+                                        <th>Revenue - Bitcoin Mining:</th>
+                                        <th></th>
+                                        <th></th>
+                                    </tr>
+                                    <tr>
+                                        <td>Bitcoin Mining - Potential</td>
+                                        <td id="mbitcoin-potential">$0</td>
+                                        <td id="ybitcoin-potential">$0</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Bitcoin Mining - Real (after uptime de-rate)</td>
+                                        <td id="mbitcoin-real">$0</td>
+                                        <td id="ybitcoin-real">$0</td>
+                                    </tr>
+                                    <!-- Indirect Revenue -->
+                                    <tr>
+                                        <th>Revenue - Indirect:</th>
+                                        <th></th>
+                                        <th></th>
+                                    </tr>
+                                    <tr>
+                                        <td>Carbon Credits / Environmental Benefit</td>
+                                        <td id="m-carbon-credits">$0</td>
+                                        <td id="y-carbon-credits">$0</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Incremental Oil Production</td>
+                                        <td id="m-incremental-oil">$0</td>
+                                        <td id="y-incremental-oil">$0</td>
+                                    </tr>
+                                    <tr>
+                                        <td>other</td>
+                                        <td id="m-other-income">$0</td>
+                                        <td id="y-other-income">$0</td>
+                                    </tr>
+                                    <!-- Unit Operating Expense Cash -->
+                                    <tr>
+                                        <th>Unit Operating Expense - Cash:</th>
+                                        <th></th>
+                                        <th></th>
+                                    </tr>
+                                    <tr>
+                                        <td> Genset Oil change / maintenance</td>
+                                        <td id="m-genset-oilchange">$0</td>
+                                        <td id="y-genset-oilchange">$0</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Cellular Data and Remote Management</td>
+                                        <td id="m-cellular-data">$0</td>
+                                        <td id="y-cellular-data">$0</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Energy Cost (fuel cost)</td>
+                                        <td id="m-energy-cost">$0</td>
+                                        <td id="y-energy-cost">$0</td>
+                                    </tr>
+                                    <!-- Depreciation Non-Cash -->
+                                    <tr>
+                                        <th>Depreciation Non-Cash:</th>
+                                        <th></th>
+                                        <th></th>
+                                    </tr>
+                                    <tr>
+                                        <td>ASIC replacement cost</td>
+                                        <td id="m-asic-replacement">$0</td>
+                                        <td id="y-asic-replacement">$0</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Genset replacement cost</td>
+                                        <td id="m-genset-replacement">$0</td>
+                                        <td id="y-genset-replacement">$0</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Loadcenter replacement cost</td>
+                                        <td id="m-loadcenter-replacement">$0</td>
+                                        <td id="y-loadcenter-replacement">$0</td>
+                                    </tr>
+
+                                    <tr>
+                                        <th class="text-primary"><h4 class="thead-id">Oil Producer (Customer) Unit Economics</h4></th>
+                                        <th class="text-primary"><h4></h4></th>
+                                        <th class="text-primary"><h4></h4></th>
+                                    </tr>
+                                    <tr>
+                                        <td>Capital Cost - Unit</td>
+                                        <td id="m-capital-cost">$0</td>
+                                        <td id="y-capital-cost">$0</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Capital Cost - Incremental cost vs combustion</td>
+                                        <td id="m-capital-cost-incremental">$0</td>
+                                        <td id="y-capital-cost-incremental">$0</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Salvage Value of Package</td>
+                                        <td id="m-salavge-value-package">$0</td>
+                                        <td id="y-salavge-value-package">$0</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Gross Revenue</td>
+                                        <td id="m-gross-revenue">$0</td>
+                                        <td id="y-gross-revenue">$0</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Operating Expenses - Cash</td>
+                                        <td id="m-operating-expenses">$0</td>
+                                        <td id="y-operating-expenses">$0</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Operating Expenses - Non-Cash</td>
+                                        <td id="m-operating-expenses-noncash">$0</td>
+                                        <td id="y-operating-expenses-noncash">$0</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Net Cashflow</td>
+                                        <td id="m-net-cashflow">$0</td>
+                                        <td id="y-net-cashflow">$0</td>
+                                    </tr>
+                                    <tr>   
+                                        <td>Cash Payback - Unit (not including non-cash expenses)</td>
+                                        <td id="m-cashpayback">$0</td>
+                                        <td id="y-cashpayback">$0</td>
+                                    </tr>
+                                    <tr>  
+                                        <td>Operating Income</td>
+                                        <td id="m-operating-income">$0</td>
+                                        <td id="y-operating-income">$0</td>
+                                    </tr>
+                                    <tr>   
+                                        <td>Payback Period - Unit only</td>
+                                        <td id="m-payback-period-unit">0</td>
+                                        <td id="y-payback-period-unit">0</td>
+                                    </tr>
+                                    <tr>    
+                                        <td>ROI - Unit</td>
+                                        <td id="m-ROI-unit">0%</td>
+                                        <td id="y-ROI-unit">0%</td>
+                                    </tr>
+                                    <tr>   
+                                        <td>Payback Period - Incremental vs Combustion</td>
+                                        <td id="m-payback-period">0</td>
+                                        <td id="y-payback-period">0</td>
+                                    </tr>
+                                    <tr>    
+                                        <td>ROI - Incremental vs Combustion</td>
+                                        <td id="m-ROI">0%</td>
+                                        <td id="y-ROI">0%</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="text-center" id="download-pdf-btn">
+                        <button type="button" class="btn btn-primary btn-lg mt-4" id="download-pdf">Download PDF</button>
+                    </div>
+                </div>  
+                
+            </div> 
+        </div>
+
+
+    <script src="https://code.jquery.com/jquery-3.6.4.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>
+
